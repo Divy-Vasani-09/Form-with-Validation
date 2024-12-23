@@ -50,17 +50,6 @@ export default function Registration() {
   const birthDateRef = useRef(null)
   const [birthDateErr, setBirthDateErr] = useState(false);
 
-  const [dataV, setDataV] = useState({
-    FullName: '',
-    UName: '',
-    EmailID: '',
-    PhoneNo: '',
-    CountryName: '',
-    Password: '',
-    Gender: '',
-    BirthDate: '',
-  })
-
   const handleFNOnChange = (e) => {
     setFullName(e.target.value.replace(/\s{2}/, ' ').replace(/[^A-Za-z\s]/ig, ''))
   }
@@ -203,14 +192,11 @@ export default function Registration() {
   };
 
   const handleValidations = () => {
-// if(!fullNRegex.test(fulName)){
-//   setEmailErr(true)
+    // if (!fullNRegex.test(fulName)) {
+    //   setEmailErr(true)
 
-//   return
-// }
-
-
-
+    //   return
+    // }
 
     {
       !fullNRegex.test(fulName) ?
@@ -220,7 +206,6 @@ export default function Registration() {
     }
 
     if (fullNRegex.test(fulName)) {
-
       {
         !userNRegex.test(userName) ?
           (setUserNameErr(true), userNRef.current.classList.replace('border-slate-950', 'border-red-700'))
@@ -287,17 +272,17 @@ export default function Registration() {
                     }
 
                     if (birthDate !== '') {
-                      setDataV(
-                      {
-                        FullName: fulName,
-                        UName: userName,
-                        EmailID: email,
-                        PhoneNo: mobileN,
-                        CountryName: country,
-                        Password: pass,
-                        Gender: genderO,
-                        BirthDate: birthDate,
-                      });
+                      dataV(
+                        {
+                          FullName: fulName,
+                          UName: userName,
+                          EmailID: email,
+                          PhoneNo: mobileN,
+                          CountryName: country,
+                          Password: pass,
+                          Gender: genderO,
+                          BirthDate: birthDate,
+                        });
                       // data
                       let getData = JSON.parse(localStorage.getItem("dataV")) || [];
                       getData.push(dataV);
