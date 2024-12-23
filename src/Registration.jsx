@@ -203,11 +203,11 @@ export default function Registration() {
   };
 
   const handleValidations = () => {
-if(!fullNRegex.test(fulName)){
-  setEmailErr(true)
+// if(!fullNRegex.test(fulName)){
+//   setEmailErr(true)
 
-  return
-}
+//   return
+// }
 
 
 
