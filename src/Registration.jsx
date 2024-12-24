@@ -161,6 +161,18 @@ export default function Registration() {
     }
   };
 
+  const handleGenderBlur = ()=> {
+      if (document.activeElement !== genderORef.current || genderO == null) {
+        // conPassRef.current.focus();
+        {
+          genderO == null ?
+            setGenderOErr(true)
+            :
+            setGenderOErr(false)
+        }
+      }
+  }
+
   const handleDateChange = (e) => {
     const newDate = e.target.value;
     setBirthDate(newDate);
@@ -192,112 +204,68 @@ export default function Registration() {
   };
 
   const handleValidations = () => {
-    // if (!fullNRegex.test(fulName)) {
-    //   setEmailErr(true)
-
-    //   return
-    // }
-
-    {
-      !fullNRegex.test(fulName) ?
-        (setFullNameErr(true), fullNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-        :
-        (setFullNameErr(false), fullNRef.current.classList.replace('border-red-700', 'border-slate-950'))
+    if(!fullNRegex.test(fulName)){
+      setFullNameErr(true)
+      , fullNRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(!userNRegex.test(userName)){
+      setUserNameErr(true)
+      , userNRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(!emailRegex.test(email)){
+      setEmailErr(true)
+      , emailRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(!mobileNRegex.test(mobileN)){
+      setMobileNErr(true)
+      , mobileNRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    const optionS = document.getElementById('optionS').value;
+    if(country === undefined || country === optionS){
+      setCountryErr(true)
+      , countryRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(!passRegex.test(pass)){
+      setPassErr(true)
+      , passRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(pwd !== conPass){
+      setConPassErr(true)
+      , conPassRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
+    }
+    if(genderO == null){
+      setGenderOErr(true)
+      return
+    }
+    if(birthDate == ''){
+      setBirthDateErr(true)
+      , birthDateRef.current.classList.replace('border-slate-950', 'border-red-700')
+      return
     }
 
-    if (fullNRegex.test(fulName)) {
+     const dataV =
       {
-        !userNRegex.test(userName) ?
-          (setUserNameErr(true), userNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setUserNameErr(false), userNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
-
-      if (userNRegex.test(userName)) {
-        {
-          !emailRegex.test(email) ?
-            (setEmailErr(true), emailRef.current.classList.replace('border-slate-950', 'border-red-700'))
-            :
-            (setEmailErr(false), emailRef.current.classList.replace('border-red-700', 'border-slate-950'))
-        }
-
-        if (emailRegex.test(email)) {
-          {
-            !mobileNRegex.test(mobileN) ?
-              (setMobileNErr(true), mobileNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-              :
-              (setMobileNErr(false), mobileNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-          }
-
-          if (mobileNRegex.test(mobileN)) {
-            const optionS = document.getElementById('optionS').value;
-            {
-              country === undefined || country === optionS ?
-                (setCountryErr(true), countryRef.current.classList.replace('border-slate-950', 'border-red-700'))
-                :
-                (setCountryErr(false), countryRef.current.classList.replace('border-red-700', 'border-slate-950'))
-            }
-
-
-            if (country !== undefined && country !== optionS) {
-              {
-                !passRegex.test(pass) ?
-                  (setPassErr(true), passRef.current.classList.replace('border-slate-950', 'border-red-700'))
-                  :
-                  (setPassErr(false), passRef.current.classList.replace('border-red-700', 'border-slate-950'))
-              }
-
-              if (passRegex.test(pass)) {
-                {
-                  pwd !== conPass ?
-                    (setConPassErr(true), conPassRef.current.classList.replace('border-slate-950', 'border-red-700'))
-                    :
-                    (setConPassErr(false), conPassRef.current.classList.replace('border-red-700', 'border-slate-950'))
-                }
-
-                if (pwd == conPass) {
-                  {
-                    genderO == null ?
-                      setGenderOErr(true)
-                      :
-                      setGenderOErr(false)
-                  }
-
-                  if (genderO !== null) {
-                    {
-                      birthDate == '' ?
-                        (setBirthDateErr(true), birthDateRef.current.classList.replace('border-slate-950', 'border-red-700'))
-                        :
-                        (setBirthDateErr(false), birthDateRef.current.classList.replace('border-red-700', 'border-slate-950'))
-                    }
-
-                    if (birthDate !== '') {
-                      dataV(
-                        {
-                          FullName: fulName,
-                          UName: userName,
-                          EmailID: email,
-                          PhoneNo: mobileN,
-                          CountryName: country,
-                          Password: pass,
-                          Gender: genderO,
-                          BirthDate: birthDate,
-                        });
-                      // data
-                      let getData = JSON.parse(localStorage.getItem("dataV")) || [];
-                      getData.push(dataV);
-                      localStorage.setItem('dataV', JSON.stringify(getData));
-                      console.log(JSON.stringify(getData));
-                      console.log(dataV);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+        FullName: fulName,
+        UName: userName,
+        EmailID: email,
+        PhoneNo: mobileN,
+        CountryName: country,
+        Password: pass,
+        Gender: genderO,
+        BirthDate: birthDate,
+      };
+    let getData = JSON.parse(localStorage.getItem("dataV")) || [];
+    getData.push(dataV);
+    localStorage.setItem('dataV', JSON.stringify(getData));
+    console.log(JSON.stringify(getData));
+    console.log(dataV);
   }
 
 
@@ -410,7 +378,7 @@ export default function Registration() {
         </div>
 
         <div className="container gender  px-2 py-0 my-1">
-          <div className='flex justify-center space-x-2 text-slate-400'>
+          <div className='flex justify-center space-x-2 text-slate-400' onBlur={handleGenderBlur}>
             <h5 className='font-bold '>Gender:</h5>
             <label className='cursor-pointer flex '>
               <input type="radio" name="myRadio" id='gender' value="male" className='cursor-pointer text-slate-800' onClick={() => setGenderO('male')} />
