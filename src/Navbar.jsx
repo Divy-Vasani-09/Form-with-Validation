@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default function Navbar() {
     return (
@@ -9,15 +9,15 @@ export default function Navbar() {
                     <span className='font-bold text-xl mx-9'>iTask</span>
                 </div>
                 <ul className="flex gap-8 mx-9">
-                    <Link to="/home">
+                    {/* <a href="/home">
                         <li className='curser-pointer hover:font-bold transition-none duration-100'>Home</li>
-                    </Link>
-                    <Link to="/login">
+                    </a> */}
+                    <NavLink className={(e) => {return e.isActive?"font-bold":""}} to="/Login">
                         <li className='curser-pointer hover:font-bold transition-none duration-100'>Login</li>
-                    </Link>
-                    <Link to="/Registration">
+                    </NavLink>
+                    <NavLink className={(e) => {return e.isActive?"font-bold":""}} to="/Registration">
                         <li className='curser-pointer hover:font-bold transition-none duration-100'>Sign UP</li>
-                    </Link>
+                    </NavLink>
                 </ul>
 
             </nav>
