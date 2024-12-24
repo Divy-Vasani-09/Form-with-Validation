@@ -50,17 +50,17 @@ export default function Registration() {
   const birthDateRef = useRef(null)
   const [birthDateErr, setBirthDateErr] = useState(false);
 
+  // const [showErrorInBorder, setShowErrorInBorder] = useState('border-slate-950');
+  const showErrorInBorder = 'border-red-700';
+  const unShowErrorInBorder = 'border-slate-950';
+
+
   const handleFNOnChange = (e) => {
     setFullName(e.target.value.replace(/\s{2}/, ' ').replace(/[^A-Za-z\s]/ig, ''))
   }
   const handleFullNBlur = () => {
     if (document.activeElement !== fullNRef.current || fulName == '') {
-      {
-        !fullNRegex.test(fulName) ?
-          (setFullNameErr(true), fullNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setFullNameErr(false), fullNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { !fullNRegex.test(fulName) ? setFullNameErr(true) : setFullNameErr(false) }
     }
   };
 
@@ -70,12 +70,7 @@ export default function Registration() {
   const handleUserNBlur = () => {
     if (document.activeElement !== userNRef.current || userName == '') {
       // userNRef.current.focus();
-      {
-        !userNRegex.test(userName) ?
-          (setUserNameErr(true), userNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setUserNameErr(false), userNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { !userNRegex.test(userName) ? setUserNameErr(true) : setUserNameErr(false) }
     }
   };
 
@@ -84,12 +79,7 @@ export default function Registration() {
   }
   const handleEmailNBlur = () => {
     if (document.activeElement !== emailRef.current || email == '') {
-      {
-        !emailRegex.test(email) ?
-          (setEmailErr(true), emailRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setEmailErr(false), emailRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { !emailRegex.test(email) ? setEmailErr(true) : setEmailErr(false) }
     }
   };
 
@@ -100,12 +90,7 @@ export default function Registration() {
   const handleMobileNBlur = () => {
     if (document.activeElement !== mobileNRef.current || mobileN == '') {
       // mobileNRef.current.focus();
-      {
-        !mobileNRegex.test(mobileN) ?
-          (setMobileNErr(true), mobileNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setMobileNErr(false), mobileNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { !mobileNRegex.test(mobileN) ? setMobileNErr(true) : setMobileNErr(false) }
     }
   };
 
@@ -120,12 +105,7 @@ export default function Registration() {
   const handleCountryBlur = () => {
     if (document.activeElement !== countryRef.current || country == '') {
       // countryRef.current.focus();
-      {
-        country == undefined || country == 'Please choose Country' ?
-          (setCountryErr(true), countryRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setCountryErr(false), countryRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { country == undefined || country == 'Please choose Country' ? setCountryErr(true) : setCountryErr(false) }
     }
   };
 
@@ -136,12 +116,7 @@ export default function Registration() {
   const handlePassBlur = () => {
     if (document.activeElement !== passRef.current || pass == '') {
       // passRef.current.focus();
-      {
-        !passRegex.test(pass) ?
-          (setPassErr(true), passRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setPassErr(false), passRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { !passRegex.test(pass) ? setPassErr(true) : setPassErr(false) }
     }
   };
 
@@ -152,25 +127,20 @@ export default function Registration() {
   const handleConPassBlur = () => {
     if (document.activeElement !== conPassRef.current || conPass == '') {
       // conPassRef.current.focus();
-      {
-        pwd !== conPass ?
-          (setConPassErr(true), conPassRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setConPassErr(false), conPassRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { pwd !== conPass ? setConPassErr(true) : setConPassErr(false) }
     }
   };
 
-  const handleGenderBlur = ()=> {
-      if (document.activeElement !== genderORef.current || genderO == null) {
-        // conPassRef.current.focus();
-        {
-          genderO == null ?
-            setGenderOErr(true)
-            :
-            setGenderOErr(false)
-        }
+  const handleGenderBlur = () => {
+    if (document.activeElement !== genderORef.current || genderO == null) {
+      // conPassRef.current.focus();
+      {
+        genderO == null ?
+          setGenderOErr(true)
+          :
+          setGenderOErr(false)
       }
+    }
   }
 
   const handleDateChange = (e) => {
@@ -194,73 +164,62 @@ export default function Registration() {
   const handleBirthDateBlur = () => {
     if (document.activeElement !== birthDateRef.current || birthDate == '') {
       // inputRef.current.focus();
-      {
-        birthDate == '' ?
-          (setBirthDateErr(true), birthDateRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setBirthDateErr(false), birthDateRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
+      { birthDate == '' ? setBirthDateErr(true) : setBirthDateErr(false) }
     }
   };
 
+
   const handleValidations = () => {
-    if(!fullNRegex.test(fulName)){
+    if (!fullNRegex.test(fulName)) {
       setFullNameErr(true)
-      , fullNRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(!userNRegex.test(userName)){
+    if (!userNRegex.test(userName)) {
       setUserNameErr(true)
-      , userNRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(!emailRegex.test(email)){
+    if (!emailRegex.test(email)) {
       setEmailErr(true)
-      , emailRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(!mobileNRegex.test(mobileN)){
+    if (!mobileNRegex.test(mobileN)) {
       setMobileNErr(true)
-      , mobileNRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
     const optionS = document.getElementById('optionS').value;
-    if(country === undefined || country === optionS){
+    if (country === undefined || country === optionS) {
       setCountryErr(true)
-      , countryRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(!passRegex.test(pass)){
+    if (!passRegex.test(pass)) {
       setPassErr(true)
-      , passRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(pwd !== conPass){
+    if (pwd !== conPass) {
       setConPassErr(true)
-      , conPassRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
-    if(genderO == null){
+    if (genderO == null) {
       setGenderOErr(true)
       return
     }
-    if(birthDate == ''){
+    if (birthDate == '') {
       setBirthDateErr(true)
-      , birthDateRef.current.classList.replace('border-slate-950', 'border-red-700')
+        , birthDateRef.current.classList.replace('border-slate-950', 'border-red-700')
       return
     }
 
-     const dataV =
-      {
-        FullName: fulName,
-        UName: userName,
-        EmailID: email,
-        PhoneNo: mobileN,
-        CountryName: country,
-        Password: pass,
-        Gender: genderO,
-        BirthDate: birthDate,
-      };
+    const dataV =
+    {
+      FullName: fulName,
+      UName: userName,
+      EmailID: email,
+      PhoneNo: mobileN,
+      CountryName: country,
+      Password: pass,
+      Gender: genderO,
+      BirthDate: birthDate,
+    };
     let getData = JSON.parse(localStorage.getItem("dataV")) || [];
     getData.push(dataV);
     localStorage.setItem('dataV', JSON.stringify(getData));
@@ -268,10 +227,9 @@ export default function Registration() {
     console.log(dataV);
   }
 
-
   return (
     <div className='container flex flex-col mx-auto my-5 w-1/2 '>
-      <div className='bg-slate-900 text-white p-9 px-0 rounded-xl min-h-[80vh] items-center text-center shadow-white drop-shadow-2xl'>
+      <div className='bg-slate-900 text-white p-9 px-0 rounded-xl min-h-[80vh] items-center text-center shadow-slate-300 drop-shadow shadow-sm'>
 
         <div className='container full-name'>
           <input
@@ -282,9 +240,9 @@ export default function Registration() {
             required
             onChange={handleFNOnChange}
             onBlur={handleFullNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${fullNameErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {fullNameErr && <p className='text-red-700 text-'>Your user name is invalid</p>}
+          {fullNameErr && <p className='text-red-700'>Your user name is invalid</p>}
         </div>
 
         <div className='container user-name'>
@@ -296,7 +254,7 @@ export default function Registration() {
             required
             onChange={handleUDOnChange}
             onBlur={handleUserNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${userNameErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {userNameErr && <p className='text-red-700 text-'>Your user name is invalid</p>}
         </div>
@@ -310,7 +268,7 @@ export default function Registration() {
             required
             onChange={handleEmlOnChange}
             onBlur={handleEmailNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${emailErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {emailErr && <p className='text-red-700'>Your email is invalid</p>}
         </div>
@@ -325,7 +283,7 @@ export default function Registration() {
             required
             onChange={handleMNOnChange}
             onBlur={handleMobileNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${mobileNErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {mobileNErr && <p className='text-red-700'>Your Phone No. is invalid </p>}
         </div>
@@ -336,7 +294,7 @@ export default function Registration() {
             required
             onChange={handleCountryChange}
             onBlur={handleCountryBlur}
-            className='p-1 py-1 my-1 w-3/4 text-base  text-slate-400 border-2 border-solid border-slate-950 rounded-lg bg-slate-950 cursor-pointer'
+            className={`p-1 py-1 my-1 w-3/4 text-base  text-slate-400 border-2 border-solid ${countryErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
           >
             <option id='optionS'>Please choose Country</option>
             {options.map((option, index) => {
@@ -359,7 +317,7 @@ export default function Registration() {
             maxLength="16"
             onChange={handlePassOnChange}
             onBlur={handlePassBlur}
-            className='px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${passErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {passErr && <p className='text-red-700 px-3'>Enter at least one UpperCase, LowerCase, Digit and any Symbol</p>}
         </div>
@@ -372,7 +330,7 @@ export default function Registration() {
             ref={conPassRef}
             onChange={handleConPassOnChange}
             onBlur={handleConPassBlur}
-            className='px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${conPassErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {conPassErr && <p className='text-red-700'>Enter same password</p>}
         </div>
@@ -405,7 +363,7 @@ export default function Registration() {
             ref={birthDateRef}
             onChange={handleDateChange}
             onBlur={handleBirthDateBlur}
-            className='px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid text-slate-400 border-slate-950 rounded-lg bg-slate-950 cursor-pointer'
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid text-slate-400 ${conPassErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
           />
           {birthDateErr && <p className='text-red-700 '>Select Your Birth Date</p>}
         </div>
