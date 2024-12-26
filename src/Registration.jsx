@@ -131,22 +131,13 @@ export default function Registration() {
       return
     }
     else{
-      const dataV =
-      {
-        FullName: inputValues.FullName,
-        UName: inputValues.UserName,
-        EmailID: inputValues.EmailID,
-        PhoneNo: inputValues.PhoneNo,
-        CountryName: inputValues.CountryName,
-        Password: inputValues.Password,
-        Gender: inputValues.Gender,
-        BirthDate: inputValues.BirthDate,
-      };
-      let getData = JSON.parse(localStorage.getItem("dataV")) || [];
-      getData.push(dataV);
+      setInputValuesErr({BirthDateErr: false})
+      
+      let getData = JSON.parse(localStorage.getItem("inputValues")) || [];
+      getData.push(inputValues);
       localStorage.setItem('dataV', JSON.stringify(getData));
       console.log(JSON.stringify(getData));
-      console.log(dataV);
+      console.log(inputValues);
     }
   }
 
@@ -161,7 +152,7 @@ export default function Registration() {
             value={inputValues.FullName}
             required
             onChange={handleFNOnChange}
-            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.FullNameErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.FullNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.FullNameErr && <p className='text-red-700'>Your user name is invalid</p>}
         </div>
@@ -173,7 +164,7 @@ export default function Registration() {
             value={inputValues.UserName}
             required
             onChange={handleUDOnChange}
-            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.UserNameErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.UserNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.UserNameErr && <p className='text-red-700 text-'>Your user name is invalid</p>}
         </div>
@@ -186,7 +177,7 @@ export default function Registration() {
             required
             onChange={handleEmlOnChange}
 
-            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.EmailIDErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.EmailIDErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.EmailIDErr && <p className='text-red-700'>Your email is invalid</p>}
         </div>
@@ -199,7 +190,7 @@ export default function Registration() {
             maxLength="10"
             required
             onChange={handleMNOnChange}
-            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PhoneNoErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PhoneNoErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.PhoneNoErr && <p className='text-red-700'>Your Phone No. is invalid </p>}
         </div>
@@ -208,7 +199,7 @@ export default function Registration() {
           <select
             required
             onChange={handleCountryChange}
-            className={`p-1 py-1 my-1 w-3/4 text-base  text-slate-400 border-2 border-solid ${inputValuesErr.CountryNameErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
+            className={`p-1 py-1 my-1 w-3/4 text-base  text-slate-400 border-2 border-solid ${inputValuesErr.CountryNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
           >
             <option id='optionS'>Please choose Country</option>
             {options.map((option, index) => {
@@ -229,7 +220,7 @@ export default function Registration() {
             value={inputValues.Password}
             maxLength="16"
             onChange={handlePassOnChange}
-            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PasswordErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PasswordErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.PasswordErr && <p className='text-red-700 px-3'>Enter at least one UpperCase, LowerCase, Digit and any Symbol</p>}
         </div>
@@ -240,7 +231,7 @@ export default function Registration() {
             placeholder="Confirm Password"
             value={inputValues.ConfirmPassword}
             onChange={handleConPassOnChange}
-            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.ConfirmPasswordErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.ConfirmPasswordErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
           {inputValuesErr.ConfirmPasswordErr && <p className='text-red-700'>Enter same password</p>}
         </div>
@@ -271,7 +262,7 @@ export default function Registration() {
             name="birthDate"
             value={inputValues.BirthDate}
             onChange={handleDateChange}
-            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid text-slate-400 ${inputValuesErr.BirthDateErr === true ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid text-slate-400 ${inputValuesErr.BirthDateErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
           />
           {inputValuesErr.BirthDateErr && <p className='text-red-700 '>Select Your Birth Date</p>}
         </div>
