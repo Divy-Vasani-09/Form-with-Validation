@@ -4,7 +4,7 @@ import { fullNRegex, userNRegex, emailRegex, mobileNRegex, passRegex } from './C
 
 export default function Registration() {
 
-  const [inputValues, setInputValues] = useState({
+  const defaultInputValues = {
     FullName: '',
     UserName: '',
     EmailID: '',
@@ -14,12 +14,17 @@ export default function Registration() {
     ConfirmPassword: '',
     Gender: '',
     BirthDate: ''
-  })
+  }
+
+  const [inputValues, setInputValues] = useState(defaultInputValues)
   const [inputValuesErr, setInputValuesErr] = useState({
     FullNameErr: false,
     UserNameErr: false,
+    UserNameExist: false,
     EmailIDErr: false,
+    EmailIDExist: false,
     PhoneNoErr: false,
+    PhoneNoExist: false,
     CountryNameErr: false,
     PasswordErr: false,
     ConfirmPasswordErr: false,
@@ -39,59 +44,78 @@ export default function Registration() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setInputValuesErr({ [name + 'Err']: false })
     setInputValues({
       ...inputValues,
       [name]: value
     });
   };
-  const pwd = inputValues.Password;
+
+  let getData = JSON.parse(localStorage.getItem('inputValues')) || [];
+  const UserNameVerify = getData.map(e => e.UserName)
+  const emailIDVerify = getData.map(e => e.EmailID)
+  const PhoneNoVerify = getData.map(e => e.PhoneNo)
 
   const handleValidations = () => {
+
     if (!fullNRegex.test(inputValues.FullName)) {
-      setInputValuesErr({ FullNameErr: true })
+      setInputValuesErr((e) => ({ ...e, FullNameErr: true }))
       return
     }
-    if (!userNRegex.test(inputValues.UserName)) {
-      setInputValuesErr({ UserNameErr: true })
+    if (!userNRegex.test(inputValues.UserName) || inputValues.UserName.length == 0) {
+      setInputValuesErr((e) => ({ ...e, UserNameErr: true }))
       return
     }
+    if (UserNameVerify.includes(inputValues.UserName)) {
+      console.log("hello")
+      setInputValuesErr((e) => ({ ...e, UserNameExist: true }))
+      return
+    }
+    console.log(inputValuesErr)
     if (!emailRegex.test(inputValues.EmailID)) {
-      setInputValuesErr({ EmailIDErr: true })
+      setInputValuesErr((e) => ({ ...e, EmailIDErr: true }))
+      return
+    }
+    if (emailIDVerify.includes(inputValues.EmailID)) {
+      setInputValuesErr((e) => ({ EmailIDExist: true }))
       return
     }
     if (!mobileNRegex.test(inputValues.PhoneNo)) {
-      setInputValuesErr({ PhoneNoErr: true })
+      setInputValuesErr((e) => ({ ...e, PhoneNoErr: true }))
+      return
+    }
+    if (PhoneNoVerify.includes(inputValues.PhoneNo)) {
+      setInputValuesErr((e) => ({ PhoneNoExist: true }))
       return
     }
     const optionS = document.getElementById('optionS').value;
     if (inputValues.CountryName === '' || inputValues.CountryName === optionS) {
-      setInputValuesErr({ CountryNameErr: true })
+      setInputValuesErr((e) => ({ ...e, CountryNameErr: true }))
       return
     }
     if (!passRegex.test(inputValues.Password)) {
-      setInputValuesErr({ PasswordErr: true })
+      setInputValuesErr((e) => ({ ...e, PasswordErr: true }))
       return
     }
+    const pwd = inputValues.Password;
     if (pwd !== inputValues.ConfirmPassword) {
-      setInputValuesErr({ ConfirmPasswordErr: true })
+      setInputValuesErr((e) => ({ ConfirmPasswordErr: true }))
       return
     }
     if (inputValues.Gender == '') {
-      setInputValuesErr({ GenderErr: true })
+      setInputValuesErr((e) => ({ GenderErr: true }))
       return
     }
     if (inputValues.BirthDate == '') {
-      setInputValuesErr({ BirthDateErr: true })
+      setInputValuesErr((e) => ({ BirthDateErr: true }))
       return
     }
     else {
-      setInputValuesErr({ BirthDateErr: false })
-
-      let getData = JSON.parse(localStorage.getItem("inputValues")) || [];
       getData.push(inputValues);
       localStorage.setItem('inputValues', JSON.stringify(getData));
       console.log(JSON.stringify(getData));
       console.log(inputValues);
+      setInputValues(defaultInputValues);
     }
   }
 
@@ -109,7 +133,7 @@ export default function Registration() {
             onChange={handleChange}
             className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.FullNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.FullNameErr && <p className='text-red-700'>Your user name is invalid</p>}
+          {inputValuesErr.FullNameErr && <p className='text-red-700'>Your Full name is invalid</p>}
         </div>
 
         <div className='container user-name'>
@@ -120,9 +144,10 @@ export default function Registration() {
             value={inputValues.UserName}
             required
             onChange={handleChange}
-            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.UserNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.UserNameErr || inputValuesErr.UserNameExist ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.UserNameErr && <p className='text-red-700 text-'>Your user name is invalid</p>}
+          {inputValuesErr.UserNameErr && <p className='text-red-700 text-'>{inputValues.UserName.length == 0 ? "Please Enter Your user name" : "Enter Your valid user name"}</p>}
+          {inputValuesErr.UserNameExist && <p className='text-red-700 text-'>Your user name already exist</p>}
         </div>
 
         <div className='container email-id'>
@@ -136,7 +161,8 @@ export default function Registration() {
 
             className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.EmailIDErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.EmailIDErr && <p className='text-red-700'>Your email is invalid</p>}
+          {inputValuesErr.EmailIDErr && <p className='text-red-700'>{inputValues.EmailID === '' ? "Please Enter your Email ID" : "Enter Your valid email ID"}</p>}
+          {inputValuesErr.EmailIDExist && <p className='text-red-700'>Your Email ID is already exist</p>}
         </div>
 
         <div className='container mobile-No'>
@@ -150,7 +176,8 @@ export default function Registration() {
             onChange={handleChange}
             className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PhoneNoErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>Your Phone No. is invalid </p>}
+          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>{inputValues.PhoneNo.length == 0 ?"Please Enter Your Phone No.":"Your Phone No. is invalid" }</p>}
+          {inputValuesErr.PhoneNoExist && <p className='text-red-700'>Your Phone No. is already exist </p>}
         </div>
 
         <div className=" country-section  text-center ">
