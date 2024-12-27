@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { fullNRegex, userNRegex, emailRegex, mobileNRegex, passRegex } from './Component/Regexes';
-
 
 export default function Registration() {
 
@@ -44,7 +43,7 @@ export default function Registration() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputValuesErr({ [name + 'Err']: false })
+    setInputValuesErr((e) => ({ ...e, [name + 'Err']: false }))
     setInputValues({
       ...inputValues,
       [name]: value
@@ -77,7 +76,7 @@ export default function Registration() {
       return
     }
     if (emailIDVerify.includes(inputValues.EmailID)) {
-      setInputValuesErr((e) => ({ EmailIDExist: true }))
+      setInputValuesErr((e) => ({ ...e, EmailIDExist: true }))
       return
     }
     if (!mobileNRegex.test(inputValues.PhoneNo)) {
@@ -85,7 +84,7 @@ export default function Registration() {
       return
     }
     if (PhoneNoVerify.includes(inputValues.PhoneNo)) {
-      setInputValuesErr((e) => ({ PhoneNoExist: true }))
+      setInputValuesErr((e) => ({ ...e, PhoneNoExist: true }))
       return
     }
     const optionS = document.getElementById('optionS').value;
@@ -99,15 +98,15 @@ export default function Registration() {
     }
     const pwd = inputValues.Password;
     if (pwd !== inputValues.ConfirmPassword) {
-      setInputValuesErr((e) => ({ ConfirmPasswordErr: true }))
+      setInputValuesErr((e) => ({ ...e, ConfirmPasswordErr: true }))
       return
     }
     if (inputValues.Gender == '') {
-      setInputValuesErr((e) => ({ GenderErr: true }))
+      setInputValuesErr((e) => ({ ...e, GenderErr: true }))
       return
     }
     if (inputValues.BirthDate == '') {
-      setInputValuesErr((e) => ({ BirthDateErr: true }))
+      setInputValuesErr((e) => ({ ...e, BirthDateErr: true }))
       return
     }
     else {
@@ -176,7 +175,7 @@ export default function Registration() {
             onChange={handleChange}
             className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PhoneNoErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>{inputValues.PhoneNo.length == 0 ?"Please Enter Your Phone No.":"Your Phone No. is invalid" }</p>}
+          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>{inputValues.PhoneNo.length == 0 ? "Please Enter Your Phone No." : "Your Phone No. is invalid"}</p>}
           {inputValuesErr.PhoneNoExist && <p className='text-red-700'>Your Phone No. is already exist </p>}
         </div>
 
