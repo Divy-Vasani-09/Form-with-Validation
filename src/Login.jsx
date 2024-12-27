@@ -1,145 +1,62 @@
-import React, { useRef, useState } from 'react'
-import { userNRegex, emailRegex, passRegex } from './Component/Regexes';
+import React, { useState } from 'react'
 
 export default function Login() {
-  const [userName, setUserName] = useState("");
-  const userNRef = useRef(null);
-  const [userNameErr, setUserNameErr] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const emailRef = useRef(null);
-  const [emailErr, setEmailErr] = useState(false);
+  const [inputValues, setInputValues] = useState({
+    EmailID: '',
+    Password: '',
+  })
+  const [inputValuesErr, setInputValuesErr] = useState({
+    EmailIDErr: false,
+    PasswordErr: false,
+  })
+  const showErrorInBorder = 'border-red-700';
+  const unShowErrorInBorder = 'border-slate-950';
 
-  const [pass, setPass] = useState("");
-  const passRef = useRef(null);
-  const [passErr, setPassErr] = useState(false);
-
-  const handleUDOnChange = (e) => {
-    setUserName(e.target.value.replace(/\s/g, '').replace(/[^A-Za-z_0-9]/ig, '').replace(/_{2}/g, '_'))
-  }
-  const handleUserNBlur = () => {
-    if (document.activeElement !== userNRef.current || userName == '') {
-      // userNRef.current.focus();
-      {
-        !userNRegex.test(userName) ?
-          (setUserNameErr(true), userNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setUserNameErr(false), userNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
   };
-
-  const handleEmlOnChange = (e) => {
-    setEmail(e.target.value.replace(/\s/g, '').replace(/[^a-z0-9.@]/ig, '').replace(/@{2}/, '@').replace(/[.]{2}/, '.'))
-  }
-  const handleEmailNBlur = () => {
-    if (document.activeElement !== emailRef.current || email == '') {
-      {
-        !emailRegex.test(email) ?
-          (setEmailErr(true), emailRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setEmailErr(false), emailRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
-    }
-  };
-
-  const handlePassOnChange = (e) => {
-    setPass(e.target.value)
-  }
-  const pwd = pass;
-  const handlePassBlur = () => {
-    if (document.activeElement !== passRef.current || pass == '') {
-      // passRef.current.focus();
-      {
-        !passRegex.test(pass) ?
-          (setPassErr(true), passRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setPassErr(false), passRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
-    }
-  };
-
-  const handleValidations = () => {
-    {
-      !fullNRegex.test(fulName) ?
-        (setFullNameErr(true), fullNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-        :
-        (setFullNameErr(false), fullNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-    }
-    if (userNRegex.test(userName)) {
-      {
-        !emailRegex.test(email) ?
-          (setEmailErr(true), emailRef.current.classList.replace('border-slate-950', 'border-red-700'))
-          :
-          (setEmailErr(false), emailRef.current.classList.replace('border-red-700', 'border-slate-950'))
-      }
-
-      if (emailRegex.test(email)) {
-        {
-          !mobileNRegex.test(mobileN) ?
-            (setMobileNErr(true), mobileNRef.current.classList.replace('border-slate-950', 'border-red-700'))
-            :
-            (setMobileNErr(false), mobileNRef.current.classList.replace('border-red-700', 'border-slate-950'))
-        }
-      }
-    }
-  }
 
   return (
     <div className='container flex flex-col mx-auto my-5 w-1/2 '>
-      <div className='bg-slate-900 text-white p-9 px-0 rounded-xl min-h-[80vh] items-center text-center shadow-white drop-shadow-2xl'>
-        <div className='container user-name'>
-          <input
-            type="text"
-            placeholder="User Name"
-            value={userName}
-            ref={userNRef}
-            required
-            onChange={handleUDOnChange}
-            onBlur={handleUserNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
-          />
-          {/* {userNameErr && <p className='text-red-700 text-'>Your user name is invalid</p>} */}
-        </div>
+      <div className='bg-slate-900 text-white p-9 px-0 rounded-xl min-h-[80vh] items-center text-center shadow-slate-300 drop-shadow shadow-sm'>
 
         <div className='container email-id'>
           <input
             type="email"
             placeholder="Email Id"
-            value={email}
-            ref={emailRef}
+            name='EmailID'
+            value={inputValues.EmailID}
             required
-            onChange={handleEmlOnChange}
-            onBlur={handleEmailNBlur}
-            className='p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            onChange={handleChange}
+            className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.EmailIDErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {/* {emailErr && <p className='text-red-700'>Your email is invalid</p>} */}
+          {inputValuesErr.EmailIDErr && <p className='text-red-700'>Your email is invalid</p>}
         </div>
 
         <div className='container password'>
           <input
             type="text"
             placeholder="Password"
-            value={pass}
-            ref={passRef}
+            name='Password'
+            value={inputValues.Password}
             maxLength="16"
-            onChange={handlePassOnChange}
-            onBlur={handlePassBlur}
-            className='px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid border-slate-950 rounded-lg bg-slate-950'
+            onChange={handleChange}
+            className={`px-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PasswordErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {passErr && <p className='text-red-700 px-3'>Enter at least one UpperCase, LowerCase, Digit and any Symbol</p>}
+          {inputValuesErr.PasswordErr && <p className='text-red-700 px-3'>Enter at least one UpperCase, LowerCase, Digit and any Symbol</p>}
         </div>
 
         <div className='text-center items-center m-3'>
-          <button
-            type='submit'
+          <button type='submit'
             // onClick={handleValidations}
-            className='text-slate-300  font-bold bg-slate-800 hover:bg-slate-700 p-1 px-4 rounded-lg '
-          >
-            Submit
-          </button>
+            className='text-slate-300  font-bold bg-slate-800 hover:bg-slate-700 p-1 px-4 rounded-lg '>Submit </button>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

@@ -9,9 +9,9 @@ export default function Navbar() {
                     <span className='font-bold text-xl mx-9'>iTask</span>
                 </div>
                 <ul className="flex gap-8 mx-9">
-                    {/* <a href="/home">
-                        <li className='curser-pointer hover:font-bold transition-none duration-100'>Home</li>
-                    </a> */}
+                    <NavLink className={(e) => {return e.isActive?"font-bold":""}} to="/DashBoard">
+                        <li className='curser-pointer hover:font-bold transition-none duration-100'>DashBoard</li>
+                    </NavLink>
                     <NavLink className={(e) => {return e.isActive?"font-bold":""}} to="/Login">
                         <li className='curser-pointer hover:font-bold transition-none duration-100'>Login</li>
                     </NavLink>
