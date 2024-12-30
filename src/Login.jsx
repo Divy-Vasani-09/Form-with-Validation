@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { emailRegex, passRegex } from './Component/Regexes';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
@@ -72,7 +72,6 @@ export default function Login() {
           />
           {inputValuesErr.EmailIDErr && <p className='text-red-700'>{inputValues.EmailID.length == 0 ? "Please Enter Email id" : "Your email is invalid"}</p>}
           {inputValuesErr.EmailIDExistErr && <p className='text-red-700'>Email is not existed</p>}
-          {console.log(inputValuesErr.EmailIDExistErr)}
         </div>
 
         <div className='container password'>
@@ -94,6 +93,9 @@ export default function Login() {
             onClick={handleValidations}
             className='text-slate-300  font-bold bg-slate-800 hover:bg-slate-700 p-1 px-4 rounded-lg '>Submit </button>
         </div>
+      <div className="container text-center text-sm">
+        Create new account <Link to="/Registration" className='text-blue-600 text-base'>Register!</Link>
+      </div>
       </div>
     </div >
   )

@@ -3,6 +3,8 @@ import Registration from './Registration'
 import Login from './Login';
 import Navbar from './Navbar'
 import DashBoard from './DashBoard';
+import Profile from './Profile';
+import EditProfile from './EditProfile';
 // import './App.css'
 
 function App() {
@@ -16,12 +18,20 @@ function App() {
       element: <><Navbar /><DashBoard /></>, 
     },
     {
+      path: "/Registration",
+      element: <><Navbar /><Registration /></>
+    },
+    {
       path: "/Login",
       element: <><Navbar /><Login /></>
     },
     {
-      path: "/Registration",
-      element: <><Navbar /><Registration /></>
+      path: "/Profile",
+      element: <><Navbar /><Profile /></>
+    },
+    {
+      path: "/EditProfile",
+      element: <><Navbar /><EditProfile /></>
     },
   ])
   return (

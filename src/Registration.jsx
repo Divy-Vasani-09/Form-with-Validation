@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { fullNRegex, userNRegex, emailRegex, mobileNRegex, passRegex } from './Component/Regexes';
+import { Link } from 'react-router-dom';
 
 export default function Registration() {
 
@@ -30,20 +31,13 @@ export default function Registration() {
     GenderErr: false,
     BirthDateErr: false
   })
-  const options = [
-    "India",
-    "China",
-    "USA",
-    "Canada",
-    "Australia",
-  ];
 
   const showErrorInBorder = 'border-red-700';
   const unShowErrorInBorder = 'border-slate-950';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputValuesErr((e) => ({ ...e, [name + 'Err']: false }))
+    setInputValuesErr((e)=>({...e, [name + 'Err']: false }))
     setInputValues({
       ...inputValues,
       [name]: value
@@ -70,13 +64,12 @@ export default function Registration() {
       setInputValuesErr((e) => ({ ...e, UserNameExist: true }))
       return
     }
-    console.log(inputValuesErr)
     if (!emailRegex.test(inputValues.EmailID)) {
       setInputValuesErr((e) => ({ ...e, EmailIDErr: true }))
       return
     }
     if (emailIDVerify.includes(inputValues.EmailID)) {
-      setInputValuesErr((e) => ({ ...e, EmailIDExist: true }))
+      setInputValuesErr((e) => ({...e, EmailIDExist: true }))
       return
     }
     if (!mobileNRegex.test(inputValues.PhoneNo)) {
@@ -84,7 +77,7 @@ export default function Registration() {
       return
     }
     if (PhoneNoVerify.includes(inputValues.PhoneNo)) {
-      setInputValuesErr((e) => ({ ...e, PhoneNoExist: true }))
+      setInputValuesErr((e) => ({...e, PhoneNoExist: true }))
       return
     }
     const optionS = document.getElementById('optionS').value;
@@ -98,22 +91,20 @@ export default function Registration() {
     }
     const pwd = inputValues.Password;
     if (pwd !== inputValues.ConfirmPassword) {
-      setInputValuesErr((e) => ({ ...e, ConfirmPasswordErr: true }))
+      setInputValuesErr((e) => ({...e, ConfirmPasswordErr: true }))
       return
     }
     if (inputValues.Gender == '') {
-      setInputValuesErr((e) => ({ ...e, GenderErr: true }))
+      setInputValuesErr((e) => ({...e, GenderErr: true }))
       return
     }
     if (inputValues.BirthDate == '') {
-      setInputValuesErr((e) => ({ ...e, BirthDateErr: true }))
+      setInputValuesErr((e) => ({...e, BirthDateErr: true }))
       return
     }
     else {
       getData.push(inputValues);
       localStorage.setItem('inputValues', JSON.stringify(getData));
-      console.log(JSON.stringify(getData));
-      console.log(inputValues);
       setInputValues(defaultInputValues);
     }
   }
@@ -175,7 +166,7 @@ export default function Registration() {
             onChange={handleChange}
             className={`p-2 py-1 mx-5 my-1 w-3/4 border-2 border-solid ${inputValuesErr.PhoneNoErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950`}
           />
-          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>{inputValues.PhoneNo.length == 0 ? "Please Enter Your Phone No." : "Your Phone No. is invalid"}</p>}
+          {inputValuesErr.PhoneNoErr && <p className='text-red-700'>{inputValues.PhoneNo.length == 0 ?"Please Enter Your Phone No.":"Your Phone No. is invalid" }</p>}
           {inputValuesErr.PhoneNoExist && <p className='text-red-700'>Your Phone No. is already exist </p>}
         </div>
 
@@ -183,17 +174,15 @@ export default function Registration() {
           <select
             required
             name='CountryName'
+            value={inputValues.CountryName}
             onChange={handleChange}
             className={`p-1 py-1 my-1 w-3/4 text-base  text-slate-400 border-2 border-solid ${inputValuesErr.CountryNameErr ? showErrorInBorder : unShowErrorInBorder} rounded-lg bg-slate-950 cursor-pointer`}
           >
-            <option id='optionS'>Please choose Country</option>
-            {options.map((option, index) => {
-              return (
-                <option key={index}>
-                  {option}
-                </option>
-              );
-            })}
+            <option id='optionS' value="" disabled hidden>Please choose Country</option>
+            <option value="USA">USA</option>
+            <option value="China">China</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">UK</option>
           </select>
           {inputValuesErr.CountryNameErr && <p className='text-red-700 text-center'>Select Your Country </p>}
         </div>
@@ -256,6 +245,9 @@ export default function Registration() {
 
         <div className='text-center items-center m-3'>
           <button type='submit' onClick={handleValidations} className='text-slate-300  font-bold bg-slate-800 hover:bg-slate-700 p-1 px-4 rounded-lg '>Submit </button>
+        </div>
+        <div className="container text-center text-sm">
+          If You have account <Link to="/Login" className='text-blue-600 text-base'>Login!</Link>
         </div>
       </div>
     </div >
