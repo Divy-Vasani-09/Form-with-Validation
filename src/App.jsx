@@ -5,7 +5,6 @@ import Navbar from './Navbar'
 import DashBoard from './DashBoard';
 import Profile from './Profile';
 import EditProfile from './EditProfile';
-// import './App.css'
 
 function App() {
   const router = createBrowserRouter([
@@ -19,11 +18,11 @@ function App() {
     },
     {
       path: "/Registration",
-      element: <><Navbar /><Registration /></>
+      element: <><Registration /></>
     },
     {
       path: "/Login",
-      element: <><Navbar /><Login /></>
+      element: <><Login /></>
     },
     {
       path: "/Profile",

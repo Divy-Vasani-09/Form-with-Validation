@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { emailRegex, passRegex } from './Component/Regexes';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Login() {
 
@@ -52,7 +53,15 @@ export default function Login() {
       setInputValuesErr((e) => ({ ...e, PasswordExistErr: true }))
       return
     }
-    navigate("/");
+    // node + mongoDB
+    axios.post('http://localhost:3001/login', inputValues )
+      .then(result => {
+        console.log(result)
+        if (result.data === "Success") {
+          navigate("/")
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -93,9 +102,9 @@ export default function Login() {
             onClick={handleValidations}
             className='text-slate-300  font-bold bg-slate-800 hover:bg-slate-700 p-1 px-4 rounded-lg '>Submit </button>
         </div>
-      <div className="container text-center text-sm">
-        Create new account <Link to="/Registration" className='text-blue-600 text-base'>Register!</Link>
-      </div>
+        <div className="container text-center text-sm">
+          Create new account <Link to="/Registration" className='text-blue-600 text-base'>Register!</Link>
+        </div>
       </div>
     </div >
   )

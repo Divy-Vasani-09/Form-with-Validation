@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { fullNRegex, userNRegex, emailRegex, mobileNRegex, passRegex } from './Component/Regexes';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Registration() {
 
@@ -48,6 +49,8 @@ export default function Registration() {
   const UserNameVerify = getData.map(e => e.UserName)
   const emailIDVerify = getData.map(e => e.EmailID)
   const PhoneNoVerify = getData.map(e => e.PhoneNo)
+
+  const navigate = useNavigate()
 
   const handleValidations = () => {
 
@@ -105,6 +108,16 @@ export default function Registration() {
     else {
       getData.push(inputValues);
       localStorage.setItem('inputValues', JSON.stringify(getData));
+
+      // node + mongoDB
+      axios.post('http://localhost:3001/register', inputValues)
+      .then(result => {
+        console.log(result)
+        navigate("/Login")
+      })
+      .catch(err => console.log(err))
+
+
       setInputValues(defaultInputValues);
     }
   }
